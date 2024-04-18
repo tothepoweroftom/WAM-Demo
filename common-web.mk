@@ -15,7 +15,6 @@ IPLUG_FAUST_PATH = $(IPLUG_EXTRAS_PATH)/Faust
 IPLUG_WEB_PATH = $(IPLUG_PATH)/WEB
 NANOVG_PATH = $(DEPS_PATH)/IGraphics/NanoVG/src
 NANOSVG_PATH = $(DEPS_PATH)/IGraphics/NanoSVG/src
-IMGUI_PATH = $(DEPS_PATH)/IGraphics/imgui
 YOGA_PATH = $(DEPS_PATH)/IGraphics/yoga
 STB_PATH = $(DEPS_PATH)/IGraphics/STB
 
@@ -30,15 +29,12 @@ IGRAPHICS_SRC = $(IGRAPHICS_PATH)/IGraphics.cpp \
 	$(CONTROLS_PATH)/*.cpp \
 	$(PLATFORMS_PATH)/IGraphicsWeb.cpp
 
-IMGUI_SRC = $(IGRAPHICS_PATH)/IGraphicsImGui.cpp
-
 INCLUDE_PATHS = -I$(PROJECT_ROOT) \
 -I$(WAM_SDK_PATH) \
 -I$(WDL_PATH) \
 -I$(SWELL_PATH) \
 -I$(IPLUG_PATH) \
 -I$(IPLUG_EXTRAS_PATH) \
--I$(IPLUG_SYNTH_PATH) \
 -I$(IPLUG_FAUST_PATH) \
 -I$(IPLUG_WEB_PATH) \
 -I$(IGRAPHICS_PATH) \
@@ -49,8 +45,6 @@ INCLUDE_PATHS = -I$(PROJECT_ROOT) \
 -I$(NANOVG_PATH) \
 -I$(NANOSVG_PATH) \
 -I$(STB_PATH) \
--I$(IMGUI_PATH) \
--I$(IMGUI_PATH)/backends \
 -I$(YOGA_PATH) \
 -I$(YOGA_PATH)/yoga
 
@@ -68,8 +62,6 @@ $(IPLUG_WEB_PATH)/IPlugWeb.cpp \
 $(IGRAPHICS_PATH)/IGraphicsEditorDelegate.cpp
 
 NANOVG_LDFLAGS = -s USE_WEBGL2=0 -s FULL_ES3=1
-
-IMGUI_LDFLAGS = -s BINARYEN_TRAP_MODE=clamp 
 
 # CFLAGS for both WAM and WEB targets
 CFLAGS = $(INCLUDE_PATHS) \
@@ -92,7 +84,7 @@ WAM_EXPORTS = "[\
   '_wam_onmessageN', '_wam_onmessageS', '_wam_onmessageA', '_wam_onpatch' \
   ]"
 
-WEB_EXPORTS = "['_malloc', '_free', '_main', '_iplug_fsready', '_iplug_syncfs', 'ccall', 'cwrap', 'setValue', 'UTF8ToString']"
+WEB_EXPORTS = "['_malloc', '_free', '_main', '_iplug_fsready', '_iplug_syncfs']"
 
 # LDFLAGS for both WAM and WEB targets
 LDFLAGS = -s ALLOW_MEMORY_GROWTH=1 --bind
@@ -107,7 +99,7 @@ WAM_LDFLAGS = -s EXPORTED_RUNTIME_METHODS="['ccall', 'cwrap', 'setValue', 'UTF8T
 #-s ENVIRONMENT=worker
 
 WEB_LDFLAGS = -s EXPORTED_FUNCTIONS=$(WEB_EXPORTS) \
--s EXPORTED_RUNTIME_METHODS="['ccall', 'cwrap', 'UTF8ToString']" \
+-s EXPORTED_RUNTIME_METHODS="['ccall', 'cwrap' 'UTF8ToString']" \
 -s BINARYEN_ASYNC_COMPILATION=1 \
 -s FORCE_FILESYSTEM=1 \
 -s ENVIRONMENT=web \
