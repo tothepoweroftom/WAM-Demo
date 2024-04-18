@@ -62,7 +62,7 @@ void WAMDemo::ProcessBlock(sample** inputs, sample** outputs, int nFrames)
            // Generate white noise between -1.0 and 1.0
       double noise = ((double)rand() / RAND_MAX) * 2.0 - 1.0;
       // Apply gain to the input signal and add scaled noise
-      outputs[c][s] = noise * gain;
+      outputs[c][s] = noise;
     }
   }
 }
